@@ -31,8 +31,31 @@ class _RegisterState extends State<Register> {
     lastnameController.dispose();
     super.dispose();
   }
-  var logger = Logger();
+     @override
+  void initState() {
+  super.initState();
 
+  firstnameController.addListener(_validateForm);
+  lastnameController.addListener(_validateForm);
+  emailController.addListener(_validateForm);
+  passwordController.addListener(_validateForm);
+  confirmPasswordController.addListener(_validateForm);
+}
+
+  var logger = Logger();
+  bool isFormValid = false;
+
+void _validateForm() {
+  setState(() {
+    isFormValid =
+    firstnameController.text.isNotEmpty &&
+    lastnameController.text.isNotEmpty &&
+    emailController.text.isNotEmpty &&
+    confirmPasswordController.text.isNotEmpty &&
+    passwordController.text.isNotEmpty &&
+    passwordController.text == confirmPasswordController.text;
+  });
+}
   @override
   Widget build(BuildContext context) {
      return  Scaffold(
@@ -81,127 +104,133 @@ class _RegisterState extends State<Register> {
   ),
 ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          child: Column(
-            children: [
-              Center(
-                child: Text(
-                  'Sign Up',
-                  style:TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.grey[900],
+        child: Center(
+          child: Container(
+            
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            child: Column(
+              children: [
+                Center(
+                  child: Text(
+                    'Sign Up',
+                    style:TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.grey[900],
+                    ),
                   ),
                 ),
+                SizedBox(height: 10.0,),
+                Text(
+                  'Hello there! Let’s create your account.',
+                  style:TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey[600]
+                  ),
+                ),
+                SizedBox(height:30.0),
+                 CustomInput(
+                  controller: firstnameController,
+                  hintText: "First Name",
+                  label: "First Name",
+                  keyboardType: TextInputType.text,
+                ),
+                SizedBox(height: 30.0,),
+                CustomInput(
+                  controller: lastnameController,
+                  hintText: "Last Name",
+                  label: "Last Name",
+                   keyboardType: TextInputType.text,
+                ),
+                 SizedBox(height: 30.0,),
+                CustomInput(
+                  controller: emailController,
+                  hintText: "Email",
+                  label: "Email Address",
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: 30.0,),
+                CustomInput(
+                  controller: confirmPasswordController,
+                  hintText: "Confirm Password",
+                   label: "Confirm Password",
+                  isPassword: true,
+                ),
+                SizedBox(height:20.0),
+          
+                CustomInput(
+                  controller: passwordController,
+                  hintText: "Password",
+                  label: "Password",
+                  isPassword: true,
+                ),
+                SizedBox(height:20.0),
+          
+                CustomCheckbox(
+                label: "I agree to Platform Terms of Serivce and Privacy Policy",
+                initialValue: false,
+                onChanged: (value) {
+                  print("Checkbox is: $value");
+                },
               ),
-              SizedBox(height: 10.0,),
-              Text(
-                'Hello there! Let’s create your account.',
-                style:TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[600]
+                 SizedBox(height:20.0),
+                AuthButton(
+                title: "Create Account",
+                isEnabled: isFormValid,
+                onPressed: () {          
+                if (isFormValid) {
+                  logger.i("Login clicked");
+                }
+                },
+              ),
+                SizedBox(height:30.0),
+                 Row(
+            children: [
+              Expanded(
+                child: Divider(
+          color: Colors.grey,
+          thickness: 1,
                 ),
               ),
-              SizedBox(height:30.0),
-               CustomInput(
-                controller: firstnameController,
-                hintText: "First Name",
-                label: "First Name",
-                keyboardType: TextInputType.text,
+          
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+          "or",  
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: Colors.grey[700],
+          ),
+                ),
               ),
-              SizedBox(height: 30.0,),
-              CustomInput(
-                controller: lastnameController,
-                hintText: "Last Name",
-                label: "Last Name",
-                 keyboardType: TextInputType.text,
+          
+              Expanded(
+                child: Divider(
+          color: Colors.grey,
+          thickness: 1,
+                ),
               ),
-               SizedBox(height: 30.0,),
-              CustomInput(
-                controller: emailController,
-                hintText: "Email",
-                label: "Email Address",
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 30.0,),
-              CustomInput(
-                controller: confirmPasswordController,
-                hintText: "Confirm Password",
-                 label: "Confirm Password",
-                isPassword: true,
-              ),
-              SizedBox(height:20.0),
-
-              CustomInput(
-                controller: passwordController,
-                hintText: "Password",
-                label: "Password",
-                isPassword: true,
-              ),
-              SizedBox(height:20.0),
-
-              CustomCheckbox(
-              label: "I agree to Platform Terms of Serivce and Privacy Policy",
-              initialValue: false,
-              onChanged: (value) {
-                print("Checkbox is: $value");
-              },
-            ),
-               SizedBox(height:20.0),
-              AuthButton(
-              title: "Create Account",
-              onPressed: () {
-                logger.i("Create Account clicked");
-              },
-            ),
-              SizedBox(height:30.0),
-               Row(
-  children: [
-    Expanded(
-      child: Divider(
-        color: Colors.grey,
-        thickness: 1,
-      ),
-    ),
-
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Text(
-        "or",  
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          color: Colors.grey[700],
-        ),
-      ),
-    ),
-
-    Expanded(
-      child: Divider(
-        color: Colors.grey,
-        thickness: 1,
-      ),
-    ),
-  ],
-),
-              SizedBox(height:25.0),
-          SvgBorderButton(
-          svgAsset: "assets/icons/googleicon.svg",
-          title: "Sign up with Google",
-          onPressed: () {
-          },
-        ),
-         SizedBox(height:25.0),
-          SvgBorderButton(
-          svgAsset: "assets/icons/appleicon.svg",
-          title: "Sign up with Apple",
-          onPressed: () {
-          },
-        ),
-        SizedBox(height:20.0),
             ],
+          ),
+                SizedBox(height:25.0),
+            SvgBorderButton(
+            svgAsset: "assets/icons/googleicon.svg",
+            title: "Sign up with Google",
+            onPressed: () {
+            },
+          ),
+           SizedBox(height:25.0),
+            SvgBorderButton(
+            svgAsset: "assets/icons/appleicon.svg",
+            title: "Sign up with Apple",
+            onPressed: () {
+            },
+          ),
+          SizedBox(height:20.0),
+              ],
+            ),
           ),
         ),
       ),

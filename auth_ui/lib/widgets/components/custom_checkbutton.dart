@@ -27,44 +27,51 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-  children: [
-    Checkbox(
-      value: _isChecked,
-      onChanged: (value) {
-        setState(() {
-          _isChecked = value ?? false;
-        });
-        widget.onChanged(value);
-      },
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4), 
-        side: BorderSide(
-          color:  Colors.grey[600]!,
-          width: 1,
+      final screenWidth = MediaQuery.of(context).size.width;
+  final buttonWidth = screenWidth > 600
+      ? screenWidth * 0.7
+      : screenWidth; 
+    return SizedBox(
+      width: buttonWidth,
+      child: Row(
+        children: [
+      Checkbox(
+        value: _isChecked,
+        onChanged: (value) {
+          setState(() {
+            _isChecked = value ?? false;
+          });
+          widget.onChanged(value);
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4), 
+          side: BorderSide(
+            color:  Colors.grey[600]!,
+            width: 1,
+          ),
+        ),
+        fillColor: WidgetStateProperty.resolveWith<Color>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return Colors.blue; 
+          }
+          return Colors.white; 
+        }),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        visualDensity: const VisualDensity(horizontal: 0, vertical: 0), 
+      ),
+      const SizedBox(width: 2),
+      Expanded(
+        child: Text(
+          widget.label,
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey[600],
+          ),
         ),
       ),
-      fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-        if (states.contains(WidgetState.selected)) {
-          return Colors.blue; 
-        }
-        return Colors.white; 
-      }),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      visualDensity: const VisualDensity(horizontal: 0, vertical: 0), 
-    ),
-    const SizedBox(width: 2),
-    Expanded(
-      child: Text(
-        widget.label,
-        style: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey[600],
-        ),
+        ],
       ),
-    ),
-  ],
-);
+    );
   }
 }

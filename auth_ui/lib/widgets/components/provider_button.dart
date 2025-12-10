@@ -15,60 +15,69 @@ class SvgBorderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final screenWidth = MediaQuery.of(context).size.width;
+  final buttonWidth = screenWidth > 600
+      ? screenWidth * 0.7
+      : screenWidth; 
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-       decoration: BoxDecoration(
-  color: Colors.white, 
-  border: Border.all(color: Colors.grey),
-  borderRadius: BorderRadius.circular(20.0),
-  boxShadow: [
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.2), 
-      blurRadius: 10, 
-      spreadRadius: 2, 
-      offset: const Offset(0, 0), 
-    ),
-  ],
-),
-
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            
-            SvgPicture.asset(
-              svgAsset,
-              width: 35,
-              height: 35,
-              placeholderBuilder: (context) => const Icon(Icons.image_not_supported, size: 24),
-            ),
-
-            const SizedBox(width: 20),
-
-            
-            Container(
-              height: 30, 
-              width: 2, 
-              color: Colors.grey,
-            ),
-
-            const SizedBox(width: 20),
-
-           
-            Center(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[700],
-                ),
-              ),
+      child: SizedBox(
+        width: buttonWidth,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+         decoration: BoxDecoration(
+          color: Colors.white, 
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+        color: Colors.grey.withOpacity(0.2), 
+        blurRadius: 10, 
+        spreadRadius: 2, 
+        offset: const Offset(0, 0), 
             ),
           ],
+        ),
+        
+          child: Row(
+           mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              
+              SvgPicture.asset(
+                svgAsset,
+                width: 35,
+                height: 35,
+                placeholderBuilder: (context) => const Icon(Icons.image_not_supported, size: 24),
+              ),
+        
+               SizedBox(width: screenWidth > 600 ? 40 : 20),
+        
+              
+              Container(
+                height: 30, 
+                width: 2, 
+                color: Colors.grey,
+              ),
+        
+              // SizedBox(width: screenWidth > 600 ? 60 : 20),
+        
+             
+              Expanded(
+                child: Center(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
