@@ -18,12 +18,14 @@ class  Register  extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
      @override
     void dispose() {
     passwordController.dispose();
+    confirmPasswordController.dispose();
     emailController.dispose();
     firstnameController.dispose();
     lastnameController.dispose();
@@ -80,7 +82,7 @@ class _RegisterState extends State<Register> {
 ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Column(
             children: [
               Center(
@@ -106,24 +108,36 @@ class _RegisterState extends State<Register> {
                CustomInput(
                 controller: firstnameController,
                 hintText: "First Name",
+                label: "First Name",
                 keyboardType: TextInputType.text,
               ),
               SizedBox(height: 30.0,),
               CustomInput(
                 controller: lastnameController,
                 hintText: "Last Name",
+                label: "Last Name",
                  keyboardType: TextInputType.text,
               ),
                SizedBox(height: 30.0,),
               CustomInput(
                 controller: emailController,
                 hintText: "Email",
+                label: "Email Address",
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 30.0,),
               CustomInput(
+                controller: confirmPasswordController,
+                hintText: "Confirm Password",
+                 label: "Confirm Password",
+                isPassword: true,
+              ),
+              SizedBox(height:20.0),
+
+              CustomInput(
                 controller: passwordController,
                 hintText: "Password",
+                label: "Password",
                 isPassword: true,
               ),
               SizedBox(height:20.0),
@@ -186,6 +200,7 @@ class _RegisterState extends State<Register> {
           onPressed: () {
           },
         ),
+        SizedBox(height:20.0),
             ],
           ),
         ),

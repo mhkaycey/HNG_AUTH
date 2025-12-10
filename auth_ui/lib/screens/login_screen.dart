@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
 ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Column(
             children: [
               Center(
@@ -102,12 +102,14 @@ class _LoginState extends State<Login> {
                 controller: emailController,
                 hintText: "Email",
                 keyboardType: TextInputType.emailAddress,
+                label: "Email Address",
               ),
               SizedBox(height: 30.0,),
               CustomInput(
                 controller: passwordController,
                 hintText: "Password",
                 isPassword: true,
+                 label: "Password",
               ),
               SizedBox(height:20.0),
               CustomCheckbox(
