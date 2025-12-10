@@ -1,39 +1,82 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+## 🚀 Usage Examples
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### **Example 1: Default UI Mode**
 
 ```dart
-const like = 'sample';
+import 'package:firebase_auth_sdk/firebase_auth_sdk.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+void main() {
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AuthWidget(
+        config: AuthConfig(
+          providers: AuthProviderConfig(
+            emailPassword: true,
+            google: true,
+            apple: true,
+          ),
+          uiMode: AuthUIMode.defaultUI,
+        ),
+        onSuccess: () {
+          // Navigate to home screen
+        },
+        onError: (error) {
+          // Show error message
+        },
+      ),
+    );
+  }
+}
 ```
 
-## Additional information
+### **Example 2: Headless/Custom UI Mode**
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+import 'package:firebase_auth_sdk/headless/auth_sdk_headless.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class CustomLoginScreen extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authService = ref.watch(authServiceProvider);
+    final authState = ref.watch(authStateProvider);
+
+    return Scaffold(
+      body: Column(
+        children: [
+          // Your custom UI
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                await authService.signInWithGoogle();
+              } on InvalidCredentialsException catch (e) {
+                // Handle specific error
+              } on NetworkException catch (e) {
+                // Handle network error
+              }
+            },
+            child: Text('Sign in with Google'),
+          ),
+
+          // Display auth state
+          Text('State: ${authState.state}'),
+          if (authState.user != null)
+            Text('User: ${authState.user!.email}'),
+        ],
+      ),
+    );
+  }
+}
+```
