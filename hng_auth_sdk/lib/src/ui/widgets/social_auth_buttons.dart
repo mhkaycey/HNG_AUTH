@@ -229,7 +229,7 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
         // Google Sign In Button
         if (widget.config.providers.google)
           SvgBorderButton(
-            svgAsset: 'assets/icons/googleicon.sv', // Replace with your SVG
+            svgAsset: 'assets/icons/googleicon.svg', // Replace with your SVG
             title: _isGoogleLoading ? 'Signing in...' : 'Continue with Google',
             onPressed: _isGoogleLoading ? () {} : _handleGoogleSignIn,
           ),
