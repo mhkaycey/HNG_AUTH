@@ -139,12 +139,11 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:hng_auth_sdk/src/exceptions/auth_exceptions.dart';
 import '../../core/auth_config.dart';
 import '../../core/auth_service.dart';
-import 'package:hng_auth_sdk/src/ui/widgets/provider_button.dart' ;
+import 'package:hng_auth_sdk/src/ui/widgets/provider_button.dart';
 
 class SocialAuthButtons extends StatefulWidget {
   final AuthConfig config;
@@ -228,8 +227,12 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
 
         // Google Sign In Button
         if (widget.config.providers.google)
+          // Image.asset(
+          //   'assets/google_icon.png',
+          //   package: 'hng_auth_sdk',),
           SvgBorderButton(
-            svgAsset: 'assets/icons/googleicon.svg', // Replace with your SVG
+            svgAsset: 'assets/icons/googleicon.svg',
+            package: 'hng_auth_sdk',
             title: _isGoogleLoading ? 'Signing in...' : 'Continue with Google',
             onPressed: _isGoogleLoading ? () {} : _handleGoogleSignIn,
           ),
@@ -240,6 +243,7 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
         if (widget.config.providers.apple)
           SvgBorderButton(
             svgAsset: 'assets/icons/appleicon.svg', // Replace with your SVG
+            package: 'hng_auth_sdk',
             title: _isAppleLoading ? 'Signing in...' : 'Continue with Apple',
             onPressed: _isAppleLoading ? () {} : _handleAppleSignIn,
           ),
@@ -247,4 +251,3 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
     );
   }
 }
-

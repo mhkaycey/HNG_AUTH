@@ -11,7 +11,7 @@ final authServiceProvider = Provider((ref) {
       providers: AuthProviderConfig(
         emailPassword: true,
         google: true,
-        apple: true,
+        apple: false,
       ),
       uiMode: AuthUIMode.defaultUI,
       autoRefreshToken: true,
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'Auth SDK Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
         useMaterial3: true,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

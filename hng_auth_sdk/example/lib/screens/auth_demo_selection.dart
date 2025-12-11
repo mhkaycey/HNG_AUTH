@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'default_ui_demo.dart';
 import 'custom_ui_demo.dart';
+import 'config_demo.dart';
 
 class AuthDemoSelection extends StatelessWidget {
   const AuthDemoSelection({super.key});
@@ -86,6 +87,42 @@ class AuthDemoSelection extends StatelessWidget {
                       SizedBox(height: 8),
                       Text(
                         'Custom UI with SDK authentication logic',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+
+            // Provider Configuration Demo Card
+            Card(
+              elevation: 4,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ConfigDemo()),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      Icon(Icons.settings, size: 48, color: Colors.green),
+                      SizedBox(height: 16),
+                      Text(
+                        'Provider Configuration',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Test different provider combinations',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey[600]),
                       ),

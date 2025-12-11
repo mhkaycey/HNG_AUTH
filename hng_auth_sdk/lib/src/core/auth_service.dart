@@ -102,27 +102,6 @@ class AuthService {
     }
   }
 
-  // Google Authentication
-  // Future signInWithGoogle() async {
-  //   try {
-  //     // final provider =
-  //     //     _providers[AuthProviderType.google] as GoogleAuthProvider;
-  //     final provider =
-  //         _providers[AuthProviderType.google] as GoogleAuthProvider;
-  //     final user = await provider.signIn();
-  //     return AuthUser.fromFirebaseUser(user);
-  //   } on AuthException {
-  //     rethrow;
-  //   } on FirebaseAuthException catch (e) {
-  //     throw ErrorMapper.mapFirebaseException(e);
-  //   } catch (e) {
-  //     if (e.toString().contains('sign_in_canceled')) {
-  //       throw AuthCancelledException();
-  //     }
-  //     throw ErrorMapper.mapGeneralException(e as Exception);
-  //   }
-  // }
-
   Future signInWithGoogle() async {
     log('🔵 Starting Google Sign-In...');
     try {
