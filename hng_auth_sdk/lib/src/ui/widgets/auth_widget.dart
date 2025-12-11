@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hng_auth_sdk/src/core/auth_config.dart';
 import 'package:hng_auth_sdk/src/core/auth_service.dart';
 import 'package:hng_auth_sdk/src/ui/widgets/social_auth_buttons.dart';
+import 'package:hng_auth_sdk/src/ui/widgets/custom_checkbutton.dart';
 
 import 'email_login_form.dart';
 
@@ -72,7 +73,15 @@ class _AuthWidgetState extends ConsumerState<AuthWidget> {
                     }
                   },
                 ),
-
+                 SizedBox(height:20.0),
+                 CustomCheckbox(
+                  label:  _isLogin ? "Remember information" :  "I agree to Platform Terms of Serivce and Privacy Policy",
+                  initialValue: false,
+                  onChanged: (value) {
+                    print("Checkbox is: $value");
+                  },
+                ),
+                  
               const SizedBox(height: 24),
 
               SocialAuthButtons(

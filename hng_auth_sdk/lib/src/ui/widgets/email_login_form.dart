@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hng_auth_sdk/src/ui/widgets/auth_button.dart';
 
 class EmailLoginForm extends StatefulWidget {
   final bool isLogin;
@@ -20,6 +21,18 @@ class _EmailLoginFormState extends State<EmailLoginForm> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Rebuild widget whenever the text changes
+    _emailController.addListener(_updateState);
+    _passwordController.addListener(_updateState);
+  }
+
+  void _updateState() {
+    setState(() {}); // Triggers rebuild to update button color
+  }
 
   @override
   void dispose() {
@@ -46,6 +59,9 @@ class _EmailLoginFormState extends State<EmailLoginForm> {
 
   @override
   Widget build(BuildContext context) {
+     final isFormFilled =
+      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+        final isButtonEnabled = isFormFilled  && !_isLoading;
     return Form(
       key: _formKey,
       child: Column(
@@ -106,31 +122,41 @@ class _EmailLoginFormState extends State<EmailLoginForm> {
             },
           ),
           const SizedBox(height: 24),
-
-          // Submit Button
-          SizedBox(
-            height: 50,
-            child: ElevatedButton(
-              onPressed: _isLoading ? null : _handleSubmit,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: _isLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : Text(
-                      widget.isLogin ? 'Login' : 'Sign Up',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-            ),
+         AuthButton(
+            title: _isLoading
+                ? 'Processing...'
+                : widget.isLogin
+                    ? 'Login'
+                    : 'Sign Up',
+            onPressed: isButtonEnabled ? _handleSubmit : (){},
+            isEnabled: isButtonEnabled,
           ),
+          // Submit Button
+          // SizedBox(
+          //   height: 50,
+          //   child: ElevatedButton(
+          //     onPressed: _isLoading ? null : _handleSubmit,
+          //     style: ElevatedButton.styleFrom(
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(12),
+          //       ),
+          //     ),
+          //     child: _isLoading
+          //         ? const SizedBox(
+          //             height: 20,
+          //             width: 20,
+          //             child: CircularProgressIndicator(strokeWidth: 2),
+          //           )
+          //         : Text(
+          //             widget.isLogin ? 'Login' : 'Sign Up',
+          //             style: const TextStyle(fontSize: 16),
+          //           ),
+          //   ),
+          // ),
         ],
       ),
     );
   }
 }
+
+
