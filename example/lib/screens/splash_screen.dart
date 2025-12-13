@@ -5,11 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hng_auth_sdk/hng_auth_sdk.dart';
 
 class SplashScreen extends ConsumerWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authStateProvider);
 
-    // Listen to auth state changes
     ref.listen(authStateProvider, (previous, next) {
       if (next.state == AuthState.authenticated) {
         Navigator.pushReplacement(

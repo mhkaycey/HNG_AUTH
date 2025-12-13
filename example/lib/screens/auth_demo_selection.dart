@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'default_ui_demo.dart';
 import 'custom_ui_demo.dart';
 import 'config_demo.dart';
 
@@ -26,39 +25,39 @@ class AuthDemoSelection extends StatelessWidget {
             SizedBox(height: 48),
 
             // Default UI Mode Card
-            Card(
-              elevation: 4,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => DefaultUIDemo()),
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Column(
-                    children: [
-                      Icon(Icons.dashboard, size: 48, color: Colors.blue),
-                      SizedBox(height: 16),
-                      Text(
-                        'Default UI Mode',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Pre-built authentication widget with all providers',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // Card(
+            //   elevation: 4,
+            //   child: InkWell(
+            //     onTap: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (_) => DefaultUIDemo()),
+            //       );
+            //     },
+            //     child: Padding(
+            //       padding: EdgeInsets.all(24),
+            //       child: Column(
+            //         children: [
+            //           Icon(Icons.dashboard, size: 48, color: Colors.blue),
+            //           SizedBox(height: 16),
+            //           Text(
+            //             'Default UI Mode',
+            //             style: TextStyle(
+            //               fontSize: 18,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //           SizedBox(height: 8),
+            //           Text(
+            //             'Pre-built authentication widget with all providers',
+            //             textAlign: TextAlign.center,
+            //             style: TextStyle(color: Colors.grey[600]),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 16),
 
             // Custom UI Mode Card

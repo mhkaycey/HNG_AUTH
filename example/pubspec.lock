@@ -291,9 +291,10 @@ packages:
   hng_auth_sdk:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: hng_auth_sdk
+      sha256: b8ab16a5ddf6f0ec6041e1bb18316f075bd1dd266073082eda3b8d8106471b92
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.1"
   http:
     dependency: transitive

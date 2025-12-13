@@ -30,7 +30,9 @@ class EmailAlreadyInUseException extends AuthException {
 }
 
 class WeakPasswordException extends AuthException {
-  WeakPasswordException([String? message])
+  final bool canBypass;
+
+  WeakPasswordException([String? message, this.canBypass = false])
     : super(
         message ?? 'Password is too weak. Use at least 6 characters',
         'weak-password',

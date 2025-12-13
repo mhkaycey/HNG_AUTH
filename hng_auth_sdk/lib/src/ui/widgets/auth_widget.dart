@@ -4,6 +4,7 @@ import 'package:hng_auth_sdk/src/core/auth_config.dart';
 import 'package:hng_auth_sdk/src/core/auth_service.dart';
 import 'package:hng_auth_sdk/src/ui/widgets/social_auth_buttons.dart';
 import 'package:hng_auth_sdk/src/ui/widgets/custom_checkbutton.dart';
+import 'package:hng_auth_sdk/src/exceptions/auth_exceptions.dart';
 
 import 'email_login_form.dart';
 
@@ -25,10 +26,11 @@ class AuthWidget extends ConsumerStatefulWidget {
 
 class _AuthWidgetState extends ConsumerState<AuthWidget> {
   bool _isLogin = true;
+  String? _lastEmail;
+  String? _lastPassword;
 
   @override
   Widget build(BuildContext context) {
-    // Create a provider for the AuthService with the widget's config
     final authServiceProvider = Provider<AuthService>((ref) {
       return AuthService(config: widget.config, ref: ref);
     });
@@ -62,26 +64,42 @@ class _AuthWidgetState extends ConsumerState<AuthWidget> {
                           password,
                         );
                       } else {
+                        _lastEmail = email;
+                        _lastPassword = password;
                         await authService.signUpWithEmailPassword(
                           email,
                           password,
                         );
                       }
                       widget.onSuccess?.call();
+                    } on WeakPasswordException catch (e) {
+                      if (e.canBypass &&
+                          _lastEmail != null &&
+                          _lastPassword != null) {
+                        _showWeakPasswordDialog(
+                          context,
+                          authService,
+                          e.message,
+                        );
+                      } else {
+                        widget.onError?.call(e.toString());
+                      }
                     } catch (e) {
                       widget.onError?.call(e.toString());
                     }
                   },
                 ),
-                 SizedBox(height:20.0),
-                 CustomCheckbox(
-                  label:  _isLogin ? "Remember information" :  "I agree to Platform Terms of Serivce and Privacy Policy",
-                  initialValue: false,
-                  onChanged: (value) {
-                    print("Checkbox is: $value");
-                  },
-                ),
-                  
+              SizedBox(height: 20.0),
+              CustomCheckbox(
+                label: _isLogin
+                    ? "Remember information"
+                    : "I agree to Platform Terms of Serivce and Privacy Policy",
+                initialValue: false,
+                onChanged: (value) {
+                  print("Checkbox is: $value");
+                },
+              ),
+
               const SizedBox(height: 24),
 
               SocialAuthButtons(
@@ -105,6 +123,49 @@ class _AuthWidgetState extends ConsumerState<AuthWidget> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showWeakPasswordDialog(
+    BuildContext context,
+    AuthService authService,
+    String? message,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Weak Password'),
+          content: Text(
+            message ??
+                'Your password is weak. Would you like to continue anyway?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onError?.call(message ?? 'Password is too weak');
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                try {
+                  await authService.signUpWithEmailPasswordWithBypass(
+                    _lastEmail!,
+                    _lastPassword!,
+                  );
+                  widget.onSuccess?.call();
+                } catch (e) {
+                  widget.onError?.call(e.toString());
+                }
+              },
+              child: const Text('Continue Anyway'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

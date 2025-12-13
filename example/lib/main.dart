@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
       title: 'Auth SDK Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        useMaterial3: true,
+        primarySwatch: Colors.lightGreen,
+        scaffoldBackgroundColor: Colors.white,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             minimumSize: Size(double.infinity, 50),

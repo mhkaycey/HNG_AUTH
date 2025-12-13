@@ -30,10 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  hng_auth_sdk:
-    path: ../../hng_auth_sdk
+
   flutter_riverpod: ^3.0.3
   firebase_core: ^4.2.1
+  hng_auth_sdk: ^0.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

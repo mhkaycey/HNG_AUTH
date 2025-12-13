@@ -102,6 +102,22 @@ class AuthService {
     }
   }
 
+  Future signUpWithEmailPasswordWithBypass(
+    String email,
+    String password,
+  ) async {
+    try {
+      final provider =
+          _providers[AuthProviderType.emailPassword] as EmailPasswordProvider;
+      final user = await provider.signUpWithWeakPasswordBypass(email, password);
+      return AuthUser.fromFirebaseUser(user);
+    } on FirebaseAuthException catch (e) {
+      throw ErrorMapper.mapFirebaseException(e);
+    } catch (e) {
+      throw ErrorMapper.mapGeneralException(e as Exception);
+    }
+  }
+
   Future signInWithGoogle() async {
     log('🔵 Starting Google Sign-In...');
     try {
